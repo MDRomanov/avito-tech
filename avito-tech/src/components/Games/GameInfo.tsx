@@ -11,59 +11,58 @@ import { gameById } from './slice/gameSlice';
 import './games.scss';
 import Error from '../../features/Error/Error';
 
-const contentStyle: React.CSSProperties = {
-  margin: 0,
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
-
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function GameInfo(): JSX.Element {
   const [isLoading, setIsLoading] = useState(true);
-  const { gamesArr, error } = useSelector((store: RootState) => store.game);
+  const abortController = new AbortController();
+  const { error, singleGame } = useSelector((store: RootState) => store.game);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { id } = useParams();
+
+  const handleAbort = (): void => {
+    abortController.abort();
+    navigate(-1);
+  };
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
   }, []);
-  // const options = {
-  //   method: 'GET',
-  //   headers: {
-  //     'X-RapidAPI-Key': 'b545eeda71mshada78c65b70eee6p13801fjsn0614f2dfea4d',
-  //     'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com'
-  //   }
-  // };
-  const singleGame = gamesArr.find((el) => el.id === Number(id));
-  // useEffect(() => {
-  //   dispatch(gameById(Number(id)))
-  // }, [id, dispatch])
-  // useEffect(() => {
-  //   const url = `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}`;
-  //   fetch(url, options).then((res) => res.json())
-  // }, [id])
+
+  useEffect(() => {
+    dispatch(gameById(Number(id)));
+  }, [id, dispatch]);
 
   if (isLoading) {
     return (
       <div className="spin">
-        <Spin indicator={antIcon} />
+        <Spin indicator={antIcon} size='large' />
       </div>
     );
   }
-  if (error) {
-    return <Error />;
+  if (error || (!isLoading && Object.keys(singleGame).length === 0)) {
+    return (
+      <>
+        <Error />
+        <Button
+          ghost
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <LeftCircleOutlined />
+          Назад на главную страницу
+        </Button>
+      </>
+    );
   }
 
   return (
     <div className="single-game">
-      {singleGame && (
+      {'id' in singleGame && (
         <>
           <Card
             hoverable
@@ -75,28 +74,51 @@ function GameInfo(): JSX.Element {
             <p>
               Дата релиза: {dayjs(singleGame.release_date).format('DD-MM-YYYY')}
             </p>
-            {/*TODO: Системные требования и карусель скриншотов */}
+            <h4>Минимальные системные требования:</h4>
+            {singleGame.minimum_system_requirements ? (
+              <div className="system-requirements">
+                <h5>
+                  Операционная система:{' '}
+                  {singleGame.minimum_system_requirements.os}
+                </h5>
+                <h5>
+                  Процессор: {singleGame.minimum_system_requirements.processor}
+                </h5>
+                <h5>ОЗУ: {singleGame.minimum_system_requirements.memory}</h5>
+                <h5>
+                  Видеокарта: {singleGame.minimum_system_requirements.graphics}
+                </h5>
+                <h5>
+                  Место на жестком диске:{' '}
+                  {singleGame.minimum_system_requirements.storage}
+                </h5>
+              </div>
+            ) : (
+              <h4>Не указаны</h4>
+            )}
+            <div className='carousel'>
             <Carousel>
-              <div>
-            <Image style={{maxWidth: '20vmax', marginBottom:'0.5vmin'}} src="https://www.freetogame.com/g/452/Call-of-Duty-Warzone-1.jpg" alt="Image" />
-              </div>
-              <div>
-              <Image style={{maxWidth: '20vmax', marginBottom:'0.5vmin'}} src="https://www.freetogame.com/g/452/Call-of-Duty-Warzone-2.jpg" alt="Image" />
-              </div>
-              <div>
-              <Image style={{maxWidth: '20vmax', marginBottom:'0.5vmin'}} src="https://www.freetogame.com/g/452/Call-of-Duty-Warzone-3.jpg" alt="Image" />
-              </div>
-              <div>
-              <Image style={{maxWidth: '20vmax', marginBottom:'0.5vmin'}} src="https://www.freetogame.com/g/452/Call-of-Duty-Warzone-4.jpg" alt="Image" />
-              </div>
+              {singleGame.screenshots.map((photo) => (
+                <div key={photo.id}>
+                  <Image
+                    style={{ maxWidth: '20vmax', marginBottom: '0.5vmin' }}
+                    src={photo.image}
+                    alt={`screenshot №${photo.id}`}
+                  />
+                </div>
+              ))}
             </Carousel>
-            <Meta title={singleGame.title} description={singleGame.genre} />
+            </div>
+            <Meta
+              title={singleGame.title}
+              description={`Жанр: ${singleGame.genre}`}
+            />
           </Card>
           <Space className="site-button-ghost-wrapper" wrap>
             <Button
               ghost
               onClick={() => {
-                navigate(-1);
+                handleAbort();
               }}
             >
               <LeftCircleOutlined />

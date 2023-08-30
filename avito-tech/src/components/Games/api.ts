@@ -1,11 +1,12 @@
-import { Game, GameCategory, GameId, GameInfo, GamePlatform } from "./types/types";
+import { Game, GameInfo } from "./types/types";
 
 const apiURL = 'free-to-play-games-database.p.rapidapi.com'
+const apiKEY = 'b545eeda71mshada78c65b70eee6p13801fjsn0614f2dfea4d'
 
 const options = {
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'b545eeda71mshada78c65b70eee6p13801fjsn0614f2dfea4d',
+      'X-RapidAPI-Key': apiKEY,
       'X-RapidAPI-Host': apiURL
     }
   };
@@ -20,7 +21,7 @@ export const initGames = async () : Promise<Game[]> => {
     }
   };
 
-  export const gameById = async (id: GameId) : Promise<GameInfo> => {
+  export const gameById = async (id: Number) : Promise<GameInfo> => {
     try {
         const url = `https://${apiURL}/api/game?id=${id}`;
         const res = await fetch(url, options);
