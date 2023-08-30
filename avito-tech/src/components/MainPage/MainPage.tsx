@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import './MainPage.scss';
-import { Spin } from 'antd';
+import { Spin, Space, Select } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GamesList from '../Games/GamesList';
-import Pagination from '../../features/Pagination/Pagination';
+import type { MenuProps } from 'antd';
+import GamePagination from '../../features/Pagination/GamePagination';
+import Error from '../../features/Error/Error';
+import {sorts} from '../../consts/sort'
+import {filters} from '../../consts/filter'
+import {platform} from '../../consts/category'
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function MainPage(): JSX.Element {
-  const { gamesArr } = useSelector((store: RootState) => store.game);
+  const { gamesArr, error } = useSelector((store: RootState) => store.game);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+  const filteredOptions = filters.filter((elem : string) => !selectedItems.includes(elem));
+
+  if (error) {
+    return <Error />
+  }
   return (
     <div className="main-page">
       <div className="free-games-logo">
@@ -18,6 +30,29 @@ function MainPage(): JSX.Element {
           src="https://cdn.bagogames.com/wp-content/uploads/2020/10/26144328/free-to-play-super-popular-featured-image-bg.jpeg?strip=all&lossy=1&ssl=1"
           alt="logo"
         />
+      </div>
+      <div className='dropdown'>
+      <Space direction="vertical">
+    <Space wrap>
+    <Select
+      mode="multiple"
+      placeholder="Отфильтровать по категориям"
+      value={selectedItems}
+      onChange={setSelectedItems}
+      style={{ width: '100%' }}
+      options={filteredOptions.map((item) => ({
+        value: item,
+        label: item,
+      }))}
+    />
+    <div className='sort-selects'>
+      <Select placeholder='Выберите платформу' options={platform} />
+      </div>
+      <div className='sort-selects'>
+      <Select placeholder='Отсортировать по' options={sorts} />
+      </div>
+      </Space>
+      </Space>
       </div>
       {gamesArr.length === 0 ? (
         <div className='spin'>
@@ -29,7 +64,7 @@ function MainPage(): JSX.Element {
       </div>
       )}
       <div className='pagination'>
-        <Pagination />
+        <GamePagination />
       </div>
     </div>
   );

@@ -12,17 +12,20 @@ function Page404(): JSX.Element {
         src="https://cdn.dribbble.com/users/621155/screenshots/3204988/le404.png"
         alt="404"
       />
-      <Space className="site-button-ghost-wrapper" wrap>
-        <Button
-          ghost
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          <LeftCircleOutlined />
-          На главную страницу
-        </Button>
-      </Space>
+      <div>
+        {' '}
+        <Space className="site-button-ghost-wrapper" wrap>
+          <Button
+            ghost
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <LeftCircleOutlined />
+            На главную страницу
+          </Button>
+        </Space>
+      </div>
     </div>
   );
 }

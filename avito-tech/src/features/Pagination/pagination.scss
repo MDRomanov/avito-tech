@@ -1,0 +1,12 @@
+.ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 10vmin;
+    .ant-pagination-item, .ant-pagination-next, .ant-pagination-prev {
+        background-color: grey;
+    }
+}
+
+a {
+    color: blue !important;
+}

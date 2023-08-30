@@ -1,5 +1,4 @@
 .free-games-logo {
-    width: 30vmax;
     display: flex;
     justify-content: center;
 }
@@ -7,4 +6,25 @@
 .spin {
     display: flex;
     justify-content: center;
+}
+
+.pagination {
+    margin-top: 20%;
+}
+
+.card-list {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    margin: 5vmax;
+}
+
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+    margin: 5vmax;
+}
+
+.ant-select-multiple {
+    min-width: 90vmax;
 }
