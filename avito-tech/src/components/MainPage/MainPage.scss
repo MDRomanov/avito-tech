@@ -22,9 +22,30 @@
 .dropdown {
     display: flex;
     justify-content: flex-end;
-    margin: 5vmax;
+    margin: 0 5vmax 0 5vmax;
 }
 
 .ant-select-multiple {
     min-width: 90vmax;
 }
+
+img {
+    max-width: 60vmax;
+}
+
+.ant-pagination {
+    display: flex;
+    justify-content: center;
+    margin: 10vmin;
+    .ant-pagination-item, .ant-pagination-next, .ant-pagination-prev {
+        background-color: grey;
+    }
+}
+
+a {
+    color: blue !important;
+}
+
+.anticon-double-left.ant-pagination-item-link-icon, .anticon-double-right.ant-pagination-item-link-icon {
+    opacity: 0.5 !important;
+    }

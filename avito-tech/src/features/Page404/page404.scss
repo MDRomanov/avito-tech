@@ -1,5 +1,11 @@
-
+.not-found {
 .site-button-ghost-wrapper {
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
+  margin: -10vmin 0 0 60vmin;
+}
+}
+
+#root > div > div > img {
+  max-width: 100%;
 }

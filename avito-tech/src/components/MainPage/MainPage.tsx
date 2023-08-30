@@ -1,27 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import './MainPage.scss';
 import { Spin, Space, Select } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import GamesList from '../Games/GamesList';
-import type { MenuProps } from 'antd';
-import GamePagination from '../../features/Pagination/GamePagination';
 import Error from '../../features/Error/Error';
 import {sorts} from '../../consts/sort'
 import {filters} from '../../consts/filter'
 import {platform} from '../../consts/category'
-
+import { Game } from '../Games/types/types';
+import type { PaginationProps } from 'antd';
+import { Pagination } from 'antd';
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function MainPage(): JSX.Element {
   const { gamesArr, error } = useSelector((store: RootState) => store.game);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+// Constants for pagination
+const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 20;
+const onChange: PaginationProps['onChange'] = (page: number) => {
+  setCurrentPage(page);
+};
+const startIndex = (currentPage - 1) * itemsPerPage;
+const endIndex = startIndex + itemsPerPage;
+const paginatedData = gamesArr.slice(startIndex, endIndex);
+//
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, []);
 
   const filteredOptions = filters.filter((elem : string) => !selectedItems.includes(elem));
 
-  if (error) {
-    return <Error />
+  if (error || (!isLoading && gamesArr.length === 0)) {
+    return <Error />;
   }
   return (
     <div className="main-page">
@@ -54,17 +72,17 @@ function MainPage(): JSX.Element {
       </Space>
       </Space>
       </div>
-      {gamesArr.length === 0 ? (
+      {gamesArr.length === 0 || isLoading ? (
         <div className='spin'>
-        <Spin indicator={antIcon} />
+        <Spin indicator={antIcon} size='large' />
         </div>
       ) : (
       <div className="card-list">
-      {gamesArr.map((game) => <GamesList game={game} key={game.id} />)}
+      {paginatedData.map((game) => <GamesList game={game} key={game.id} />)}
       </div>
       )}
       <div className='pagination'>
-        <GamePagination />
+        <Pagination current={currentPage} total={gamesArr.length} showSizeChanger={false} pageSize={itemsPerPage} onChange={onChange} />
       </div>
     </div>
   );

@@ -1,3 +1,21 @@
 .ant-card {
     margin: 1vmin;
+    background-color: #CCCCCC;
+}
+
+.site-button-ghost-wrapper {
+    margin: 3vmin 0 3vmin 0;
+}
+
+.single-game {
+   .ant-card-hoverable {
+    width: 50vmax !important;
+   }
+   .ant-card-meta-description {
+    color: rgb(0, 0, 0, 0.7) !important;
+   } 
+}
+
+.carousel {
+    margin: 0 12vmax 0 12vmax;
 }
