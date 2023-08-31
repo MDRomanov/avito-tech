@@ -1,0 +1,22 @@
+.not-found {
+.site-button-ghost-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: -10vmin 0 0 60vmin;
+}
+}
+
+#root > div > div > img {
+  max-width: 100%;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+  #root > div > div > img  {
+      min-width: 40vmax !important;
+  }
+  .not-found {
+    .site-button-ghost-wrapper {
+      margin: -10vmin 0 0 0;
+    }
+    }
+}

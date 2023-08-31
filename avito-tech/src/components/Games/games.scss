@@ -1,0 +1,40 @@
+.ant-card {
+    margin: 1vmin;
+    background-color: #CCCCCC;
+}
+
+.site-button-ghost-wrapper {
+    margin: 3vmin 0 3vmin 0;
+    display: flex;
+    justify-content: center;
+}
+
+.single-game {
+   .ant-card-hoverable {
+    width: 50vmax !important;
+   }
+   .ant-card-meta-description {
+    color: rgb(0, 0, 0, 0.7) !important;
+   } 
+}
+
+.carousel {
+    margin: 0;
+}
+
+@media (min-width: 300px) and (max-width: 500px) {
+    .single-game {
+        max-width: 40vmax !important;
+        .ant-card-hoverable {
+            width: auto !important;
+           }
+    }
+}
+
+@media (min-width: 275px) and (max-width: 300px) {
+    .single-game {
+        .ant-card-hoverable {
+         width: 35vmax !important;
+        }
+     }
+}
