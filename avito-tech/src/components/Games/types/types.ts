@@ -25,7 +25,10 @@ export type GameInfo = Game & {
   status: string;
 };
 
-export type GameCategory = Pick<Game, 'genre'>;
-export type GamePlatform = Pick<Game, 'platform'>;
+export type SortGame = {
+  platforms?: string;
+  sorting?: string;
+  categories?: string;
+}
 
 export type State = { gamesArr: Game[]; error: undefined | string, singleGame: GameInfo | {} };

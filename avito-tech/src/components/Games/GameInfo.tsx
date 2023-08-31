@@ -34,12 +34,26 @@ function GameInfo(): JSX.Element {
 
   useEffect(() => {
     dispatch(gameById(Number(id)));
+    if (localStorage.getItem(`Game number ${id}`)) {
+      let getLocalStorageData = JSON.parse(
+        localStorage.getItem(`Game number ${id}`) || '',
+      );
+      if (
+        Number(new Date()) - Number(new Date(getLocalStorageData.time)) <
+        5 * 60 * 1000
+      ) {
+        dispatch(gameById(getLocalStorageData.data.id));
+      } else {
+        localStorage.removeItem(`Game number ${id}`);
+        dispatch(gameById(Number(id)));
+      }
+    }
   }, [id, dispatch]);
 
   if (isLoading) {
     return (
       <div className="spin">
-        <Spin indicator={antIcon} size='large' />
+        <Spin indicator={antIcon} size="large" />
       </div>
     );
   }
@@ -96,18 +110,18 @@ function GameInfo(): JSX.Element {
             ) : (
               <h4>Не указаны</h4>
             )}
-            <div className='carousel'>
-            <Carousel>
-              {singleGame.screenshots.map((photo) => (
-                <div key={photo.id}>
-                  <Image
-                    style={{ maxWidth: '20vmax', marginBottom: '0.5vmin' }}
-                    src={photo.image}
-                    alt={`screenshot №${photo.id}`}
-                  />
-                </div>
-              ))}
-            </Carousel>
+            <div className="carousel">
+              <Carousel>
+                {singleGame.screenshots.map((photo) => (
+                  <div key={photo.id}>
+                    <Image
+                      style={{ maxWidth: '20vmax', marginBottom: '0.5vmin' }}
+                      src={photo.image}
+                      alt={`screenshot №${photo.id}`}
+                    />
+                  </div>
+                ))}
+              </Carousel>
             </div>
             <Meta
               title={singleGame.title}
