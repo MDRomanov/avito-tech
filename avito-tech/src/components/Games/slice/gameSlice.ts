@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as api from '../api';
-import { State } from '../types/types';
+import { SortGame, State } from '../types/types';
 
 const initialState : State = {
     gamesArr: [],
@@ -11,6 +11,8 @@ const initialState : State = {
 export const initGames = createAsyncThunk('game/init', () => api.initGames())
 
 export const gameById = createAsyncThunk('game/byId', (action: Number) => api.gameById(action))
+
+export const gameBySorting = createAsyncThunk('game/sort', (action: SortGame) => api.gameBySorting(action))
 
 const gameSlice = createSlice({
     name: 'game',
@@ -28,6 +30,12 @@ const gameSlice = createSlice({
             state.singleGame = action.payload
           })
           .addCase(gameById.rejected, (state, action) => {
+            state.error = action.error.message;
+          })
+          .addCase(gameBySorting.fulfilled, (state, action) => {
+            state.gamesArr = action.payload
+          })
+          .addCase(gameBySorting.rejected, (state, action) => {
             state.error = action.error.message;
           })
     },
