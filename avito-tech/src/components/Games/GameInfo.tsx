@@ -58,7 +58,7 @@ function GameInfo(): JSX.Element {
       </div>
     );
   }
-  if (error && !isLoading || Object.keys(singleGame).length === 0) {
+  if (error && !isLoading) {
     return (
       <>
         <Error />
