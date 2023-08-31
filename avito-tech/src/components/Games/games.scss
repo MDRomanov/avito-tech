@@ -19,7 +19,7 @@
 }
 
 .carousel {
-    margin: 0 12vmax 0 12vmax;
+    margin: 0;
 }
 
 @media (min-width: 300px) and (max-width: 500px) {
@@ -29,4 +29,12 @@
             width: auto !important;
            }
     }
+}
+
+@media (min-width: 275px) and (max-width: 300px) {
+    .single-game {
+        .ant-card-hoverable {
+         width: 35vmax !important;
+        }
+     }
 }

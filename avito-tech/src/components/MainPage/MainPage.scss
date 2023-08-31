@@ -1,62 +1,90 @@
 .free-games-logo {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .ant-select-single {
-    min-width: 25vmax;
+  min-width: 25vmax;
 }
 
 .ant-space-align-center {
-    justify-content: center;
+  justify-content: center;
 }
 
 .spin {
-    display: flex;
-    justify-content: center;
-    margin-top: 5vmax;
+  display: flex;
+  justify-content: center;
+  margin-top: 5vmax;
 }
 
 .card-list {
-    display: flex;
-    justify-content: space-evenly;
-    flex-flow: row wrap;
-    margin: 5vmax;
+  display: flex;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+  margin: 5vmax;
 }
 
 .dropdown {
-    display: flex;
-    justify-content: flex-end;
-    margin: 0 5vmax 0 5vmax;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 5vmax 0 5vmax;
 }
 
 .ant-select-multiple {
-    min-width: 80vmax;
+  min-width: 80vmax;
 }
 
 img {
-    max-width: 60vmax;
+  max-width: 60vmax;
 }
 
 .ant-pagination {
-    display: flex;
-    justify-content: center;
-    margin: 10vmin;
-    .ant-pagination-item, .ant-pagination-next, .ant-pagination-prev {
-        background-color: grey;
-    }
+  display: flex;
+  justify-content: center;
+  margin: 10vmin;
+  .ant-pagination-item,
+  .ant-pagination-next,
+  .ant-pagination-prev {
+    background-color: grey;
+  }
 }
 
 a {
-    color: blue !important;
+  color: blue !important;
 }
 
-.anticon-double-left.ant-pagination-item-link-icon, .anticon-double-right.ant-pagination-item-link-icon {
-    opacity: 0.5 !important;
-    }
+.anticon-double-left.ant-pagination-item-link-icon,
+.anticon-double-right.ant-pagination-item-link-icon {
+  opacity: 0.5 !important;
+}
 
-    @media (min-width: 275px) and (max-width: 1200px) {
-        .ant-select-multiple {
-            min-width: 25vmax !important;
-        }
-    }
+@media (min-width: 275px) and (max-width: 1200px) {
+  .ant-select-multiple {
+    min-width: 25vmax !important;
+  }
+  .ant-select-single {
+    max-width: 25vmax;
+  }
+  img {
+    max-width: 40vmax;
+  }
+  .main-page {
+    max-width: 95vw;
+  }
+}
+
+@media (min-width: 275px) and (max-width: 300px) {
+  :where(.css-dev-only-do-not-override-17a39f8).ant-pagination
+    .ant-pagination-prev,
+  :where(.css-dev-only-do-not-override-17a39f8).ant-pagination
+    .ant-pagination-next,
+  :where(.css-dev-only-do-not-override-17a39f8).ant-pagination
+    .ant-pagination-jump-prev,
+  :where(.css-dev-only-do-not-override-17a39f8).ant-pagination
+    .ant-pagination-jump-next {
+    min-width: 15px !important;
+  }
+  :where(.css-dev-only-do-not-override-17a39f8).ant-pagination .ant-pagination-item {
+    min-width: 30px !important;
+  }
+}
