@@ -15,22 +15,19 @@ import { Pagination } from 'antd';
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function MainPage({
-  platforms,
-  sorting,
   setPlatforms,
   setSorting,
-  categories,
   setCategories,
+  tag,
+  setTag
 }: {
-  platforms: string;
-  sorting: string;
   setPlatforms: React.Dispatch<React.SetStateAction<string>>;
   setSorting: React.Dispatch<React.SetStateAction<string>>;
-  categories: string;
   setCategories: React.Dispatch<React.SetStateAction<string>>;
+  tag: string[];
+  setTag: React.Dispatch<React.SetStateAction<string[]>>
 }): JSX.Element {
   const { gamesArr, error } = useSelector((store: RootState) => store.game);
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   // Constants for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +37,7 @@ function MainPage({
   };
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedData = gamesArr.slice(startIndex, endIndex);
+  const paginatedData = gamesArr.length > 0 ? gamesArr.slice(startIndex, endIndex) : [];
   //
 
   useEffect(() => {
@@ -50,7 +47,7 @@ function MainPage({
   }, []);
 
   const filteredOptions = filters.filter(
-    (elem: string) => !selectedItems.includes(elem),
+    (elem: string) => !tag.includes(elem),
   );
 
   if (error || (!isLoading && gamesArr.length === 0)) {
@@ -70,8 +67,8 @@ function MainPage({
             <Select
               mode="multiple"
               placeholder="Отфильтровать по категориям"
-              value={selectedItems}
-              onChange={setSelectedItems}
+              value={tag}
+              onChange={setTag}
               style={{ width: '100%' }}
               options={filteredOptions.map((item) => ({
                 value: item,
@@ -81,7 +78,6 @@ function MainPage({
             <div className="sort-selects">
               <Select
                 placeholder="Выберите платформу"
-                value={platforms}
                 options={platform}
                 onChange={(value: string): void => setPlatforms(value)}
               />
@@ -89,7 +85,6 @@ function MainPage({
             <div className="sort-selects">
               <Select
                 placeholder="Отсортировать по"
-                value={sorting}
                 options={sorts}
                 onChange={(value: string): void => setSorting(value)}
               />
@@ -97,7 +92,6 @@ function MainPage({
             <div className="sort-selects">
               <Select
                 placeholder="По одной категории"
-                value={categories}
                 options={filters.map((item : string) => ({value: item, label: item}))}
                 onChange={(value: string): void => setCategories(value)}
               />
@@ -109,13 +103,13 @@ function MainPage({
         <div className="spin">
           <Spin indicator={antIcon} size="large" />
         </div>
-      ) : (
+      ) : paginatedData.length === 0 ? (<div style={{display: 'flex', justifyContent:'center', margin: '5vmin', fontWeight:'bolder'}}>По вашему запросу ничего не найдено</div>) :
         <div className="card-list">
           {paginatedData.map((game) => (
             <GamesList game={game} key={game.id} />
           ))}
         </div>
-      )}
+      }
       <div className="pagination">
         <Pagination
           current={currentPage}

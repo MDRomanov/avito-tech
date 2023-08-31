@@ -31,4 +31,8 @@ export type SortGame = {
   categories?: string;
 }
 
+export type FilterGame = Pick<SortGame, 'platforms'> & {
+  tag?: string[];
+}
+
 export type State = { gamesArr: Game[]; error: undefined | string, singleGame: GameInfo | {} };

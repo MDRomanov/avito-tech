@@ -21,3 +21,12 @@
 .carousel {
     margin: 0 12vmax 0 12vmax;
 }
+
+@media (min-width: 300px) and (max-width: 500px) {
+    .single-game {
+        max-width: 40vmax !important;
+        .ant-card-hoverable {
+            width: auto !important;
+           }
+    }
+}

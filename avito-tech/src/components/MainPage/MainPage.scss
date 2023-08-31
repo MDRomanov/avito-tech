@@ -3,6 +3,14 @@
     justify-content: center;
 }
 
+.ant-select-single {
+    min-width: 25vmax;
+}
+
+.ant-space-align-center {
+    justify-content: center;
+}
+
 .spin {
     display: flex;
     justify-content: center;
@@ -23,7 +31,7 @@
 }
 
 .ant-select-multiple {
-    min-width: 90vmax;
+    min-width: 80vmax;
 }
 
 img {
@@ -45,4 +53,10 @@ a {
 
 .anticon-double-left.ant-pagination-item-link-icon, .anticon-double-right.ant-pagination-item-link-icon {
     opacity: 0.5 !important;
+    }
+
+    @media (min-width: 275px) and (max-width: 1200px) {
+        .ant-select-multiple {
+            min-width: 25vmax !important;
+        }
     }
