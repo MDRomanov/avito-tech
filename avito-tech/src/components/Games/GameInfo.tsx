@@ -35,6 +35,7 @@ function GameInfo(): JSX.Element {
   useEffect(() => {
     dispatch(gameById(Number(id)));
     if (localStorage.getItem(`Game number ${id}`)) {
+      setIsLoading(false)
       let getLocalStorageData = JSON.parse(
         localStorage.getItem(`Game number ${id}`) || '',
       );
@@ -57,7 +58,7 @@ function GameInfo(): JSX.Element {
       </div>
     );
   }
-  if (error || (!isLoading && Object.keys(singleGame).length === 0)) {
+  if (error && !isLoading || Object.keys(singleGame).length === 0) {
     return (
       <>
         <Error />
@@ -111,11 +112,11 @@ function GameInfo(): JSX.Element {
               <h4>Не указаны</h4>
             )}
             <div className="carousel">
-              <Carousel>
+              <Carousel autoplay>
                 {singleGame.screenshots.map((photo) => (
                   <div key={photo.id}>
                     <Image
-                      style={{ maxWidth: '20vmax', marginBottom: '0.5vmin' }}
+                      style={{ maxWidth: '60vmax', marginBottom: '0.5vmin' }}
                       src={photo.image}
                       alt={`screenshot №${photo.id}`}
                     />
